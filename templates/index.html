@@ -19,24 +19,20 @@
             text-align: center;
         }
 
-        .hero {
-            display: flex;
-            justify-content: space-between; /* 👈 pushes content apart */
-            align-items: center;
-            height: 80vh;
-            padding: 0 40px; /* spacing from edges */
-        }
-
-        .text-block {
-            max-width: 50%;
+        .cup-container {
+            position: absolute;   /* 👈 allows free placement */
+            top: 20px;            /* 👈 distance from top */
+            right: 20px;          /* 👈 distance from right */
+            text-align: center;
         }
 
         .cup {
-            width: 150px;
-            height: 150px;
+            width: 120px;
+            height: 120px;
             background: url("/static/teacup.png") no-repeat center;
             background-size: contain;
             animation: zoom 3s ease-in-out infinite;
+            margin-bottom: 5px;
         }
 
         @keyframes zoom {
@@ -45,17 +41,30 @@
             100% { transform: scale(1); }
         }
 
-        footer {
-            background-color: #e0e0e0;
-            padding: 10px;
-            font-size: 0.9em;
-            text-align: center;
+        .cup-label {
+            font-size: 1em;
+            color: #2e7d32;
+            font-weight: bold;
+        }
+
+        .hero {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 80vh;
         }
 
         .tagline {
             font-size: 1.5em;
             color: #2e7d32;
             margin-top: 10px;
+        }
+
+        footer {
+            background-color: #e0e0e0;
+            padding: 10px;
+            font-size: 0.9em;
+            text-align: center;
         }
     </style>
 </head>
@@ -64,11 +73,14 @@
         Green Teees
     </header>
 
+    <!-- Tea cup in top-right corner -->
+    <div class="cup-container">
+        <div class="cup"></div>
+        <div class="cup-label">Signature Blend</div>
+    </div>
+
     <div class="hero">
-        <div class="text-block">
-            <div class="tagline">Refreshing taste, naturally brewed.</div>
-        </div>
-        <div class="cup"></div> <!-- 👈 now aligned to the right -->
+        <div class="tagline">Refreshing taste, naturally brewed.</div>
     </div>
 
     <footer>
