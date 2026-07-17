@@ -5,6 +5,7 @@ env:
     DOCKER_REGISTRY_USERNAME: /myapp/docker-credential/username
     DOCKER_REGISTRY_PASSWORD: /myapp/docker-credential/passwords
     DOCKER_REGISTRY_URL: /myapp/docker-credential/url
+    DEPLOY_KEY: "/ec2/demo_key"
 
 phases:
   install:
@@ -15,6 +16,11 @@ phases:
     commands:
       - echo "Installing dependencies..."
       - pip install -r requirements.txt
+      - echo "Writing SSH key..."
+      - echo "$DEPLOY_KEY" > demo_key.pem
+      - chmod 600 demo_key.pem
+      - mkdir -p ~/.ssh
+      - ssh-keyscan -H 98.93.31.3 >> ~/.ssh/known_hosts
 
   build:
     commands:
@@ -28,7 +34,7 @@ phases:
     commands:
       - echo "Build completed successfully!"
       - echo "Deploying to EC2..."
-      - ssh -i $demo_key.pem ubuntu@98.93.31.3 "
+      - ssh -i demo_key.pem ubuntu@98.93.31.3 "
           docker rm -f \$(docker ps -q --filter ancestor=mdnishadnk/simple-python-flask-app:latest) ;
           docker rmi mdnishadnk/simple-python-flask-app:latest ;
           docker run -d -p 80:5000 mdnishadnk/simple-python-flask-app:latest
