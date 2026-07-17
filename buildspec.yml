@@ -5,30 +5,35 @@ env:
     DOCKER_REGISTRY_USERNAME: /myapp/docker-credential/username
     DOCKER_REGISTRY_PASSWORD: /myapp/docker-credential/passwords
     DOCKER_REGISTRY_URL: /myapp/docker-credential/url
+
 phases:
   install:
     runtime-versions:
       python: latest
+
   pre_build:
     commands:
       - echo "Installing dependencies..."
       - pip install -r requirements.txt
+
   build:
     commands:
-      - echo "Running tests...>>>>"
+      - echo "Running tests..."
       - echo "Building Docker image..."
       - echo "$DOCKER_REGISTRY_PASSWORD" | docker login -u "$DOCKER_REGISTRY_USERNAME" --password-stdin "$DOCKER_REGISTRY_URL"
-      - docker build -t "docker.io/mdnishadnk/simple-python-flask-app:latest" .
-      - docker push "docker.io/mdnishadnk/simple-python-flask-app:latest"
+      - docker build -t docker.io/mdnishadnk/simple-python-flask-app:latest .
+      - docker push docker.io/mdnishadnk/simple-python-flask-app:latest
+
   post_build:
     commands:
       - echo "Build completed successfully!"
-      - echo "Logging into EC2..."
-      - ssh -i demo_key.pem ubuntu@98.93.31.3 "cd /home/ubuntu"
-      - docker rm -f $(docker ps -q --filter ancestor=mdnishadnk/simple-python-flask-app:latest) 
-      - docker rmi mdnishadnk/simple-python-flask-app:latest
-      - sudo docker run -d -p 80:5000 mdnishadnk/simple-python-flask-app:latest
-"
+      - echo "Deploying to EC2..."
+      - ssh -i demo_key.pem ubuntu@98.93.31.3 "
+          docker rm -f \$(docker ps -q --filter ancestor=mdnishadnk/simple-python-flask-app:latest) ;
+          docker rmi mdnishadnk/simple-python-flask-app:latest ;
+          docker run -d -p 80:5000 mdnishadnk/simple-python-flask-app:latest
+        "
+
 artifacts:
   files:
     - "**/*"
