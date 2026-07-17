@@ -3,7 +3,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def hello():
-    return "Hello from Flask_Nishad Nechikkadan"
+    return "AWS code buil tested and successfully completed by Nishad N K"
 
 if __name__ == "__main__":
     # Bind to all interfaces, not just localhost
