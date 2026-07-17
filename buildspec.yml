@@ -23,6 +23,10 @@ phases:
   post_build:
     commands:
       - echo "Build completed successfully!"
+      - echo "Logging into EC2..."
+      - ssh -i demo_key.pem ubuntu@98.93.31.3 "cd /home/ubuntu/project && docker rm -f $(docker ps -q --filter ancestor=mdnishadnk/simple-python-flask-app:latest) && docker rmi mdnishadnk/simple-python-flask-app:latest
+ && sudo docker run -d -p 80:5000 mdnishadnk/simple-python-flask-app:latest"
+"
 artifacts:
   files:
     - "**/*"
