@@ -1,34 +1,72 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Rotating Tea Cup</title>
+    <title>Green Teees</title>
     <style>
         body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #f5fff5;
+            color: #333;
+            text-align: center;
+        }
+
+        header {
+            background-color: #2e7d32;
+            color: white;
+            padding: 20px;
+            font-size: 2em;
+            font-weight: bold;
+        }
+
+        .hero {
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            background-color: #f0f0f0;
+            height: 80vh;
         }
-        
+
         .cup {
             width: 150px;
             height: 150px;
             background: url("/static/teacup.png") no-repeat center;
             background-size: contain;
             animation: zoom 3s ease-in-out infinite;
-        }
-        
-        @keyframes zoom {
-            transform: scale(1.5) rotateY(20deg);
-            0%   { transform: scale(1); }
-            50%  { transform: scale(1.5); }  /* maximum zoom in */
-            100% { transform: scale(1); }    /* zoom out back to normal */
+            margin-bottom: 20px;
         }
 
+        @keyframes zoom {
+            0%   { transform: scale(1); }
+            50%  { transform: scale(1.5); }
+            100% { transform: scale(1); }
+        }
+
+        .tagline {
+            font-size: 1.5em;
+            color: #2e7d32;
+            margin-top: 10px;
+        }
+
+        footer {
+            background-color: #e0e0e0;
+            padding: 10px;
+            font-size: 0.9em;
+        }
     </style>
 </head>
 <body>
-    <div class="cup"></div>
+    <header>
+        Green Teees
+    </header>
+
+    <div class="hero">
+        <div class="cup"></div>
+        <div class="tagline">Refreshing taste, naturally brewed.</div>
+    </div>
+
+    <footer>
+        © 2026 Green Teees. All rights reserved.
+    </footer>
 </body>
 </html>
